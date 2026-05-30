@@ -1,366 +1,858 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cryo Hub PROJECT</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cryo Hub Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    scroll-behavior:smooth;
-    font-family:'Poppins',sans-serif;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-    background:#07111f;
-    color:white;
-    overflow-x:hidden;
-}
+  :root {
+    --primary: #38bdf8;
+    --primary-glow: rgba(56,189,248,0.25);
+    --primary-dark: #0ea5e9;
+    --accent: #ffffff;
+    --bg-deep: #020b18;
+    --bg-card: rgba(8,28,52,0.85);
+    --bg-card2: rgba(12,36,64,0.9);
+    --border: rgba(56,189,248,0.25);
+    --border-bright: rgba(56,189,248,0.6);
+    --text: #e0f2fe;
+    --muted: #7dd3fc;
+  }
 
-/* Background */
-body::before{
-    content:'';
-    position:fixed;
-    width:100%;
-    height:100%;
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ─── ANIMATED BG ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
     background:
-    linear-gradient(rgba(0,170,255,.08),rgba(0,170,255,.08)),
-    url('https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png');
-    background-size:cover;
-    background-position:center;
-    filter:blur(4px);
-    z-index:-2;
-}
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(56,189,248,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 80%, rgba(14,165,233,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 0% 100%, rgba(56,189,248,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-body::after{
-    content:'';
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(3,10,20,0.8);
-    z-index:-1;
-}
+  /* GRID LINES */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-/* Navbar */
-nav{
-    position:fixed;
-    top:0;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    padding:20px;
-    backdrop-filter:blur(15px);
-    background:rgba(0,0,0,0.3);
-    z-index:999;
-}
+  * { position: relative; z-index: 1; }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    padding:14px 28px;
-    border-radius:15px;
-    border:2px solid #4dcfff;
-    transition:.3s;
-    font-weight:700;
-    background:rgba(255,255,255,0.05);
-}
+  /* ─── NAVBAR ─── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    background: rgba(2,11,24,0.7);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-nav a:hover{
-    background:#4dcfff;
-    color:#02111d;
-    transform:translateY(-4px);
-    box-shadow:0 0 25px #4dcfff;
-}
+  .logo {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
 
-/* Hero */
-.hero{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    padding:100px 20px;
-}
+  .logo span { color: white; }
 
-.hero img{
-    width:450px;
-    max-width:95%;
-    border-radius:35px;
-    box-shadow:0 0 50px #4dcfff;
-    margin-bottom:30px;
-}
+  nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
 
-.hero h1{
-    font-size:5rem;
-    font-weight:900;
-    text-shadow:0 0 25px #4dcfff;
-}
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
 
-.hero p{
-    color:#d6f7ff;
-    font-size:1.3rem;
-    margin-top:10px;
-}
+  nav ul a:hover { color: var(--primary); }
 
-.hero-btns{
-    margin-top:35px;
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
+  /* ─── HERO ─── */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+  }
 
-.hero-btns a{
-    padding:16px 40px;
-    background:linear-gradient(135deg,#61dfff,#3ab8ff);
-    color:#00111e;
-    text-decoration:none;
-    border-radius:18px;
-    font-weight:800;
-    transition:.3s;
-}
+  .hero-img-wrap {
+    width: min(700px, 90vw);
+    aspect-ratio: 16/7;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border-bright);
+    box-shadow: 0 0 60px rgba(56,189,248,0.15), 0 0 120px rgba(56,189,248,0.06);
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
 
-.hero-btns a:hover{
-    transform:scale(1.08);
-    box-shadow:0 0 35px #4dcfff;
-}
+  .hero-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
-/* Section */
-section{
-    padding:120px 8%;
-}
+  /* glow overlay on image */
+  .hero-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(2,11,24,0.8) 100%);
+  }
 
-.title{
-    text-align:center;
-    font-size:3rem;
-    margin-bottom:60px;
-    font-weight:900;
-}
+  .hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
 
-.title span{
-    color:#5ed8ff;
-}
+  .hero h1 span { color: var(--primary); }
 
-/* Categories */
-.categories{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:30px;
-}
+  .hero p {
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+  }
 
-.card{
-    background:rgba(255,255,255,0.05);
-    border:2px solid rgba(77,207,255,0.4);
-    border-radius:30px;
-    overflow:hidden;
-    transition:.4s;
-    backdrop-filter:blur(15px);
-}
+  /* ─── NAV TABS ─── */
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
 
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 0 35px rgba(77,207,255,.5);
-}
+  .tab-btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.75rem 2.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-bright);
+    background: var(--bg-card);
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
 
-.card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--primary);
+    color: var(--bg-deep);
+    border-color: var(--primary);
+    box-shadow: 0 0 24px var(--primary-glow);
+  }
 
-.card-content{
-    padding:25px;
-}
+  /* ─── SECTIONS ─── */
+  section { display: none; padding: 3rem 2rem 5rem; max-width: 1200px; margin: 0 auto; }
+  section.visible { display: block; }
 
-.card h3{
-    font-size:2rem;
-    margin-bottom:10px;
-}
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
 
-.price{
-    color:#7ce8ff;
-    font-weight:800;
-    margin:15px 0;
-}
+  .section-title span { color: var(--primary); }
 
-.btn{
-    display:inline-block;
-    width:100%;
-    text-align:center;
-    padding:15px;
-    border-radius:14px;
-    text-decoration:none;
-    color:white;
-    border:2px solid #4dcfff;
-    transition:.3s;
-    font-weight:700;
-}
+  /* ─── PRODUCT GRID ─── */
+  .products-header {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
 
-.btn:hover{
-    background:#4dcfff;
-    color:#02111d;
-}
+  .category-card {
+    flex: 1;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: block;
+  }
 
-/* Discord */
-.discord-box{
-    display:flex;
-    flex-wrap:wrap;
-    gap:25px;
-    justify-content:center;
-}
+  .category-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(56,189,248,0.12);
+  }
 
-.discord-card{
-    width:420px;
-    background:rgba(255,255,255,.05);
-    border-radius:25px;
-    padding:35px;
-    text-align:center;
-    border:2px solid rgba(77,207,255,.4);
-}
+  .category-card .cat-banner {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: white;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
 
-.discord-card h2{
-    margin-bottom:20px;
-}
+  .cat-banner.paid {
+    background: linear-gradient(135deg, #0a1628 0%, #0c2a4a 50%, #0a1628 100%);
+  }
 
-.discord-card p{
-    margin-bottom:20px;
-    color:#d8f8ff;
-}
+  .cat-banner.free {
+    background: linear-gradient(135deg, #0a1628 0%, #072840 50%, #0a1628 100%);
+  }
 
-/* Footer */
-footer{
-    text-align:center;
-    padding:40px;
-    border-top:1px solid rgba(255,255,255,.1);
-    color:#8dcfff;
-}
+  .cat-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(56,189,248,0.03) 20px,
+      rgba(56,189,248,0.03) 40px
+    );
+  }
 
-@media(max-width:768px){
-.hero h1{
-font-size:3rem;
-}
-}
+  .cat-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--primary);
+    color: var(--bg-deep);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .cat-badge.free-badge {
+    background: rgba(56,189,248,0.15);
+    color: var(--primary);
+    border: 1px solid var(--border-bright);
+  }
+
+  .category-card .cat-info {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .cat-info .cat-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+
+  .cat-info .cat-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .cat-price { color: var(--primary); font-weight: 700; }
+
+  /* ─── PRODUCT CARDS ─── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(56,189,248,0.1);
+  }
+
+  .product-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #0a1628, #0c2a4a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(2,11,24,0.7) 100%);
+  }
+
+  .product-info { padding: 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .product-info h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+  }
+
+  .product-info p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .price-tag {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary);
+  }
+
+  .price-tag.free { color: #4ade80; }
+
+  .btn-view {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    color: var(--bg-deep);
+    background: var(--primary);
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 1.1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-view:hover {
+    background: white;
+    box-shadow: 0 0 16px var(--primary-glow);
+  }
+
+  .stock-badge {
+    font-size: 0.72rem;
+    background: rgba(56,189,248,0.1);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── DISCORD ─── */
+  .discord-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .discord-card {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s;
+  }
+
+  .discord-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(56,189,248,0.1);
+  }
+
+  .discord-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(56,189,248,0.12);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+  }
+
+  .discord-icon svg { width: 28px; height: 28px; fill: var(--primary); }
+
+  .discord-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .discord-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .btn-discord {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--bg-deep);
+    background: var(--primary);
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.5rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-top: auto;
+    width: fit-content;
+  }
+
+  .btn-discord:hover {
+    background: white;
+    box-shadow: 0 0 24px var(--primary-glow);
+  }
+
+  /* ─── RBX EXECUTOR ─── */
+  .rbx-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  .rbx-hero img {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid var(--border-bright);
+    box-shadow: 0 0 40px rgba(56,189,248,0.12);
+  }
+
+  .rbx-text h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .rbx-text h2 span { color: var(--primary); }
+
+  .rbx-text p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-list { list-style: none; margin-bottom: 2rem; }
+
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(56,189,248,0.08);
+  }
+
+  .feature-list li::before {
+    content: '▹';
+    color: var(--primary);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  footer span { color: var(--primary); }
+
+  /* ─── SCAN LINE ANIM ─── */
+  @keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(56,189,248,0.3), transparent);
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { gap: 1rem; }
+    .products-header { flex-direction: column; }
+    .rbx-hero { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
-
 <body>
 
+<div class="scanline"></div>
+
 <nav>
-<a href="#products">PRODUCTS</a>
-<a href="#discord">DISCORD</a>
-<a href="#executor">RBX EXECUTOR</a>
+  <a class="logo" href="#"><span>CRYO</span> HUB</a>
+  <ul>
+    <li><a href="#" onclick="showSection('products')">Products</a></li>
+    <li><a href="#" onclick="showSection('discord')">Discord</a></li>
+    <li><a href="#" onclick="showSection('rbx')">RBX Executor</a></li>
+  </ul>
 </nav>
 
-<section class="hero">
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-img-wrap">
+    <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="Cryo Hub Banner"
+         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#020b18,#0c2a4a)'; this.parentElement.innerHTML+='<span style=\'font-family:Rajdhani,sans-serif;font-size:2.5rem;font-weight:700;color:#38bdf8;letter-spacing:4px;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;\'>CRYO HUB PROJECT</span>'">
+  </div>
 
-<img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="Cryo Hub">
+  <h1><span>Cryo</span> Hub Project</h1>
+  <p>YOUR ULTIMATE SOURCE FOR EXECUTORS, CHEATS & MORE</p>
 
-<h1>CRYO HUB PROJECT</h1>
-<p>FREE & PAID PRODUCTS — BEST ROBLOX EXECUTORS</p>
-
-<div class="hero-btns">
-<a href="#products">VIEW PRODUCTS</a>
-<a href="https://discord.gg/BGUjzYhh84" target="_blank">JOIN DISCORD</a>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showSection('products')">⚡ Products</button>
+    <a class="tab-btn" href="https://discord.gg/BGUjzYhh84" target="_blank">Discord Server</a>
+    <button class="tab-btn" onclick="showSection('rbx')">🎮 RBX Executor</button>
+  </div>
 </div>
 
+<!-- ─── PRODUCTS SECTION ─── -->
+<section id="products" class="visible">
+  <h2 class="section-title">Our <span>Products</span></h2>
+
+  <!-- Categories -->
+  <div class="products-header">
+    <a class="category-card" href="https://discord.gg/BGUjzYhh84" target="_blank">
+      <div class="cat-banner paid" style="background-image:url('https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png');background-size:cover;background-position:center;">
+        <span class="cat-badge">Best products!</span>
+        PAID
+      </div>
+      <div class="cat-info">
+        <div class="cat-name">Paid — Click here</div>
+        <div class="cat-meta">
+          <span class="cat-price">$0.47 – $174.95</span>
+          <span>5 Products</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="category-card" href="https://discord.gg/BGUjzYhh84" target="_blank">
+      <div class="cat-banner free" style="background-image:url('https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png');background-size:cover;background-position:center;">
+        <span class="cat-badge free-badge">FREE!</span>
+        FREE
+      </div>
+      <div class="cat-info">
+        <div class="cat-name">Free — Click here</div>
+        <div class="cat-meta">
+          <span class="cat-price">$0.00</span>
+          <span>5 Products</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Product Cards -->
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="FiveM V4"
+             onerror="this.style.display='none'">
+        FREE FIVEM V4
+      </div>
+      <div class="product-info">
+        <h3>FREE — FIVEM V4</h3>
+        <p>Latest FiveM cheat by QX Project. Compatible with all major servers. Undetected.</p>
+        <div class="product-footer">
+          <span class="price-tag free">$0.00</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="stock-badge">In Stock</span>
+            <a class="btn-view" href="https://discord.gg/BGUjzYhh84" target="_blank">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="FREE FIVEM V5">
+      </div>
+      <div class="product-info">
+        <h3>FREE — FIVEM V5</h3>
+        <p>Updated version of our FiveM cheat. More features, better stability, still undetected.</p>
+        <div class="product-footer">
+          <span class="price-tag free">$0.00</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="stock-badge">445 In Stock</span>
+            <a class="btn-view" href="https://discord.gg/BGUjzYhh84" target="_blank">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="FREE BOT RL">
+      </div>
+      <div class="product-info">
+        <h3>FREE BOT RL (GC-SSL)</h3>
+        <p>Rocket League bot with SSL bypass. Auto-farm ranks effortlessly.</p>
+        <div class="product-footer">
+          <span class="price-tag free">$0.00</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="stock-badge">In Stock</span>
+            <a class="btn-view" href="https://discord.gg/BGUjzYhh84" target="_blank">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="FREE FORTNITE">
+      </div>
+      <div class="product-info">
+        <h3>FREE FORTNITE CHEAT — V1</h3>
+        <p>Fortnite cheat V1 by QX Project. Aimbot, ESP, and more. Free edition.</p>
+        <div class="product-footer">
+          <span class="price-tag free">$0.00</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="stock-badge">In Stock</span>
+            <a class="btn-view" href="https://discord.gg/BGUjzYhh84" target="_blank">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="QX SPOOFER">
+      </div>
+      <div class="product-info">
+        <h3>QX SPOOFER — FREE</h3>
+        <p>Hardware ID spoofer. Bypass bans instantly. Supports all major games. 1002 copies available.</p>
+        <div class="product-footer">
+          <span class="price-tag free">$0.00</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="stock-badge">1002 In Stock</span>
+            <a class="btn-view" href="https://discord.gg/BGUjzYhh84" target="_blank">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="Paid Products">
+      </div>
+      <div class="product-info">
+        <h3>FRESH ROCKSTAR ACCOUNTS</h3>
+        <p>Brand new Rockstar accounts with instant delivery. Multiple tiers available.</p>
+        <div class="product-footer">
+          <span class="price-tag">$0.47+</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="stock-badge">In Stock</span>
+            <a class="btn-view" href="https://discord.gg/BGUjzYhh84" target="_blank">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<section id="products">
-
-<h1 class="title">OUR <span>PRODUCTS</span></h1>
-
-<div class="categories">
-
-<div class="card">
-<img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png">
-<div class="card-content">
-<h3>FREE PRODUCT</h3>
-<p>Best free Cryo Hub tools.</p>
-<div class="price">FREE</div>
-<a href="#" class="btn">VIEW DETAILS</a>
-</div>
-</div>
-
-<div class="card">
-<img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png">
-<div class="card-content">
-<h3>PAID PRODUCT</h3>
-<p>Premium Roblox products.</p>
-<div class="price">PREMIUM</div>
-<a href="#" class="btn">VIEW DETAILS</a>
-</div>
-</div>
-
-</div>
-
-</section>
-
+<!-- ─── DISCORD SECTION ─── -->
 <section id="discord">
+  <h2 class="section-title">Our <span>Discord Servers</span></h2>
+  <div class="discord-grid">
 
-<h1 class="title">JOIN OUR <span>DISCORD</span></h1>
+    <div class="discord-card">
+      <div class="discord-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.033.05a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+        </svg>
+      </div>
+      <h3>Cryo Hub — Main Server</h3>
+      <p>Join the main Cryo Hub Discord server. Get access to all free & paid products, support, and updates directly.</p>
+      <a class="btn-discord" href="https://discord.gg/BGUjzYhh84" target="_blank">
+        Join Server →
+      </a>
+    </div>
 
-<div class="discord-box">
+    <div class="discord-card">
+      <div class="discord-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.033.05a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+        </svg>
+      </div>
+      <h3>Free & Paid Executors</h3>
+      <p>Dedicated server for Roblox & game executors. Find the best free executors as well as premium paid options.</p>
+      <a class="btn-discord" href="https://discord.gg/hUzmsFgvQF" target="_blank">
+        Join Server →
+      </a>
+    </div>
 
-<div class="discord-card">
-<h2>Cryo Hub PROJECT</h2>
-<p>Main official Cryo Hub server.</p>
-<a href="https://discord.gg/BGUjzYhh84" target="_blank" class="btn">
-JOIN SERVER
-</a>
-</div>
-
-<div class="discord-card">
-<h2>RBX Executor Server</h2>
-<p>Best free & paid Roblox executors.</p>
-<a href="https://discord.gg/hUzmsFgvQF" target="_blank" class="btn">
-JOIN SERVER
-</a>
-</div>
-
-</div>
-
+  </div>
 </section>
 
-<section id="executor">
-
-<h1 class="title">RBX <span>EXECUTOR</span></h1>
-
-<div class="categories">
-
-<div class="card">
-<img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png">
-<div class="card-content">
-<h3>FREE EXECUTOR</h3>
-<p>Undetectable & smooth.</p>
-<div class="price">FREE</div>
-<a href="#" class="btn">GET NOW</a>
-</div>
-</div>
-
-<div class="card">
-<img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png">
-<div class="card-content">
-<h3>PAID EXECUTOR</h3>
-<p>Premium Cryo Hub access.</p>
-<div class="price">PAID</div>
-<a href="#" class="btn">BUY NOW</a>
-</div>
-</div>
-
-</div>
-
+<!-- ─── RBX EXECUTOR SECTION ─── -->
+<section id="rbx">
+  <h2 class="section-title">RBX <span>Executor</span></h2>
+  <div class="rbx-hero">
+    <div>
+      <img src="https://i.ibb.co/6chG1Zq8/943cd079-75a3-4585-9f09-e1c751592708.png" alt="RBX Executor Preview"
+           >
+    </div>
+    <div class="rbx-text">
+      <h2>The Best <span>Free</span> Executor</h2>
+      <p>Access top-tier Roblox executors, both free and paid. Our community curates the best tools so you always have what you need.</p>
+      <ul class="feature-list">
+        <li>Free executors updated regularly</li>
+        <li>Premium paid executors available</li>
+        <li>Active support community on Discord</li>
+        <li>Fast delivery — instant access</li>
+        <li>Works on latest Roblox versions</li>
+      </ul>
+      <a class="btn-discord" href="https://discord.gg/hUzmsFgvQF" target="_blank">
+        Get Executor on Discord →
+      </a>
+    </div>
+  </div>
 </section>
 
 <footer>
-© 2026 Cryo Hub PROJECT — All Rights Reserved
+  <p>© 2026 <span>Cryo Hub Project</span> — All rights reserved</p>
 </footer>
 
+<script>
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('visible');
+    const idx = ['products','discord','rbx'].indexOf(id);
+    const btns = document.querySelectorAll('.tab-btn');
+    if (btns[idx]) btns[idx].classList.add('active');
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.querySelectorAll('nav ul a').forEach((a, i) => {
+    const sections = ['products','discord','rbx'];
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      showSection(sections[i]);
+    });
+  });
+</script>
 </body>
 </html>
